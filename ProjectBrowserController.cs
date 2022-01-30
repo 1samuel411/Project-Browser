@@ -144,6 +144,18 @@ namespace EditorExtensions
                 windowToClose.Close();
             }
         }
-
+        [MenuItem("Assets/Open In New Window", false)]
+        public static void OpenInNewWindow()
+        {
+            var gs = Selection.objects;
+            string[] assetPath = gs.Select(AssetDatabase.GetAssetPath).ToArray();
+            for (var index = 0; index < assetPath.Length; index++) 
+            {
+                var a = assetPath[index];
+                if (!Directory.Exists(a))
+                    a = Path.GetDirectoryName(a);
+                instance.CreateProjectBrowser(a, Path.GetFileName(a));
+            }
+        }
     }
 }
